@@ -1,0 +1,92 @@
+.list-view-outer {
+  /*float: left;*/
+  background:none;
+  border:none;
+}
+.list-view {
+  margin: 10px 8px;
+  position: relative;
+  min-height: 20px;
+  border-radius: 5px;
+}
+.board-list-header {
+  border-radius: 5px 5px 0 0;
+  padding: 8px;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 1.1em;
+  background: rgb(9,109,163);
+  background: -moz-linear-gradient(top, rgba(9,109,163,1) 0%, rgba(1,137,190,1) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(9,109,163,1)), color-stop(100%,rgba(1,137,190,1)));
+  background: -webkit-linear-gradient(top, rgba(9,109,163,1) 0%,rgba(1,137,190,1) 100%);
+  background: -o-linear-gradient(top, rgba(9,109,163,1) 0%,rgba(1,137,190,1) 100%);
+  background: -ms-linear-gradient(top, rgba(9,109,163,1) 0%,rgba(1,137,190,1) 100%);
+  background: linear-gradient(to bottom, rgba(9,109,163,1) 0%,rgba(1,137,190,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#096da3', endColorstr='#0189be',GradientType=0);
+  border-color: #428BCA;
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+.board-list-cards {
+  padding: 7px 3px 0 7px;
+  border-width: 0 1px;
+  overflow: hidden;
+  clear: both;
+}
+.board-list-cards, .board-list-footer {
+  background-color: #f2f2f2;
+  border-color: #AAAAAA;
+  border-style: solid;
+}
+.list-view > div.last-child {
+  border-radius: 0 0 5px 5px;
+  border-width: 0 1px 1px;
+  padding:10px;
+}
+
+.board-lists.as-sortable-un-selectable, .as-sortable-dragging {
+/* 	cursor: url(./resources/images/closedhand.cur), auto; */
+	cursor: -moz-grabbing !important;
+	cursor: -webkit-grabbing !important;
+	cursor: grabbing !important;
+}
+
+.board-card {
+   padding: 8px;
+   margin:0px;
+   margin-bottom:6px;
+}
+.card-title {
+    color: #7c9eb2;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1.5em;
+    padding: 2px 1px;
+    display: block;
+}
+.as-sortable-item {
+  /*margin:0px;*/
+}
+.as-sortable-item-handle {
+  cursor:default;
+}
+.as-sortable-drag {
+/* 	position: absolute; */
+	opacity: 0.9;
+	filter:alpha(opacity=90);
+	transform: rotate(3deg);
+	-ms-transform: rotate(3deg); /* IE 9 */
+	-o-transform: rotate(3deg); /* Opera */
+    -moz-transform: rotate(3deg); /* Firefox */
+	-webkit-transform: rotate(3deg); /* Safari and Chrome */
+	-webkit-backface-visibility: hidden;
+	z-index:10000;
+}
+.addNewCard {
+    float: right;
+    padding-right: 30px;
+    color:  green;
+}
+.removeCard {
+    padding: 12px;
+    color: #444;
+}
