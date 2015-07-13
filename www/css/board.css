@@ -55,6 +55,9 @@
    margin:0px;
    margin-bottom:6px;
 }
+.board-list-cards-sortable {
+   min-height:20px;
+}
 .card-title {
     color: #7c9eb2;
     text-decoration: none;

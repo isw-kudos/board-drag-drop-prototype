@@ -3,7 +3,7 @@
     <span>{{column.name}}</span>
   </div>
   <div class="board-list-cards">
-    <div as-sortable="cardSortOptions" ng-model="column.cards">
+    <div class="board-list-cards-sortable" as-sortable="cardSortOptions" ng-model="column.cards">
       <div class="board-card"
            ng-repeat="card in column.cards"
            as-sortable-item
