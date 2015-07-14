@@ -80,10 +80,7 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
       });
     }
     if(pixels!=0)
-    {
-      // moveBy(scrollAmount);
       $scope.moveTimer = $timeout(function(){moveBy(pixels);}, 10);
-    }
   };
   $scope.stopMoving = function(){
     if($scope.moveTimer) $timeout.cancel($scope.moveTimer);
