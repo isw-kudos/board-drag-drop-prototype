@@ -3,8 +3,8 @@
 
 'use strict';
 
-angular.module('boards').controller('BoardController', ['$scope', 'BoardService', 'BoardDataFactory', '$ionicScrollDelegate', '$interval',
-function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $interval) {
+angular.module('boards').controller('BoardController', ['$scope', 'BoardService', 'BoardDataFactory', '$ionicScrollDelegate', '$timeout',
+function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout) {
   var board = $scope.board = BoardService.kanbanBoard(BoardDataFactory.kanban);
 
   function calculateListWidth() {
@@ -39,21 +39,22 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $interva
     },
     dragEnd:function() {
       if($ionicScrollDelegate) $ionicScrollDelegate.freezeScroll(false);
-      $scope.stopScrolling();
+      $scope.stopMoving();
     },
     dragMove:function(event){
       // console.log("pos",event);
       // console.log("page",document.body.clientWidth);
       var distToLeftEdge = event.nowX;
       var distToRightEdge = document.body.clientWidth - event.nowX;
-      var tollerance=150, scrollOffset=0, speed=2;
+      var tollerance=150, scrollOffset=0, maxScrollPixels=5, speed=2;
       var scrollDistance = (distToRightEdge < tollerance)
                               ? tollerance - distToRightEdge + scrollOffset
                               : (distToLeftEdge < tollerance)
                                   ? distToLeftEdge - tollerance - scrollOffset
                                   : 0;
-      $scope.stopScrolling();
-      $scope.startScrolling(scrollDistance,speed,tollerance);
+      $scope.stopMoving();
+      var scrollAmount = scrollDistance/tollerance * maxScrollPixels * speed;
+      $scope.startMoving(scrollAmount,event);
     }
   };
   $scope.cardSortOptions = angular.extend({}, $scope.listSortOptions, {
@@ -61,19 +62,26 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $interva
      return (sourceItemHandleScope.$parent.modelValue instanceof Card);
     }
   });
-  $scope.scrollInterval = null;
-  $scope.startScrolling = function(scrollDistance,speed,tollerance) {
-    if(scrollDistance!=0)
+  $scope.moveTimer = null;
+  $scope.startMoving = function(pixels,event) {
+    function moveBy(scrollAmount) {
+      $ionicScrollDelegate.scrollBy(scrollAmount,0,false);
+      //inform the sortable that the mouse has 'moved' as the container moved underneath it
+      //move the event creation out of this thread
+      $timeout(function() {
+        var e = document.createEvent('MouseEvent');
+        e.initMouseEvent("mousemove",true,true,window,1,screenX,screenY,event.nowX, event.nowY, false, false, false, false, 0, undefined);
+        document.dispatchEvent(e);
+      });
+    }
+    if(pixels!=0)
     {
-      var scroll = scrollDistance/tollerance * 5 * speed;
-      $ionicScrollDelegate.scrollBy(scroll,0,false);
-      $scope.scrollInterval = $interval(function(){
-        $ionicScrollDelegate.scrollBy(scroll,0,false);
-      }, 20);
+      // moveBy(scrollAmount);
+      $scope.moveTimer = $timeout(function(){moveBy(pixels);}, 10);
     }
   };
-  $scope.stopScrolling = function(){
-    if($scope.scrollInterval) $interval.cancel($scope.scrollInterval);
+  $scope.stopMoving = function(){
+    if($scope.moveTimer) $timeout.cancel($scope.moveTimer);
   };
 
   $scope.removeCard = function (column, card) {
