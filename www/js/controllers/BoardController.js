@@ -7,9 +7,10 @@ angular.module('boards').controller('BoardController', ['$scope', 'BoardService'
 function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout) {
   var board = $scope.board = BoardService.kanbanBoard(BoardDataFactory.kanban);
 
+  $scope.columnOffset = 20;
   function calculateListWidth() {
     var optimalWidth = 400;
-    var screenWidth = document.body.clientWidth - 40;
+    var screenWidth = document.body.clientWidth - (2*$scope.columnOffset);
     $scope.listWidth = screenWidth > optimalWidth ? optimalWidth : screenWidth;
   }
   calculateListWidth();
@@ -35,10 +36,12 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
     },
     orderChanged: function (event) {},
     dragStart:function(event) {
-      if($ionicScrollDelegate) $ionicScrollDelegate.freezeScroll(true);
+      $scope.dragging = true;
+      if($ionicScrollDelegate) $ionicScrollDelegate.$getByHandle('board').freezeScroll(true);
     },
     dragEnd:function() {
-      if($ionicScrollDelegate) $ionicScrollDelegate.freezeScroll(false);
+      $scope.dragging = false;
+      if($ionicScrollDelegate) $ionicScrollDelegate.$getByHandle('board').freezeScroll(false);
       $scope.stopMoving();
     },
     dragMove:function(event){
@@ -57,15 +60,17 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
       $scope.startMoving(scrollAmount,event);
     }
   };
+
   $scope.cardSortOptions = angular.extend({}, $scope.listSortOptions, {
     accept: function (sourceItemHandleScope, destSortableScope) {
      return (sourceItemHandleScope.$parent.modelValue instanceof Card);
     }
   });
+
   $scope.moveTimer = null;
   $scope.startMoving = function(pixels,event) {
     function moveBy(scrollAmount) {
-      $ionicScrollDelegate.scrollBy(scrollAmount,0,false);
+      $ionicScrollDelegate.$getByHandle('board').scrollBy(scrollAmount,0,false);
       //inform the sortable that the mouse has 'moved' as the container moved underneath it
       //move the event creation out of this thread
       $timeout(function() {
@@ -82,6 +87,29 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
   };
   $scope.stopMoving = function(){
     if($scope.moveTimer) $timeout.cancel($scope.moveTimer);
+  };
+
+  //Dragging sideways in list does not move ion-content view as event does not propagate
+  $scope.dragListSideways = function(event){
+    if(!$scope.dragging)
+    {
+      var gesture = event.gesture;
+      var boardScroll = $ionicScrollDelegate.$getByHandle('board');
+      //keep initial scroll position
+      if(!gesture.startEvent.originalScroll)
+        gesture.startEvent.originalScroll = boardScroll.getScrollPosition().left;
+      //move scroller by same amount dragged
+      boardScroll.scrollTo(gesture.startEvent.originalScroll-gesture.deltaX,0,false);
+    }
+  };
+
+  $scope.swipeToNextList = function(event) {
+    var boardScroll = $ionicScrollDelegate.$getByHandle('board');
+    var currentColumnIndex = boardScroll.getScrollPosition().left/$scope.listWidth;
+    var newColumnIndex = event.gesture.direction=="right"
+                          ? Math.ceil(currentColumnIndex)-1
+                          : Math.floor(currentColumnIndex)+1;
+    boardScroll.scrollTo(newColumnIndex * $scope.listWidth - $scope.columnOffset,0,true);
   };
 
   $scope.removeCard = function (column, card) {

@@ -2,7 +2,9 @@
   <div class="board-list-header" as-sortable-item-handle>
     <span>{{column.name}}</span>
   </div>
-  <div class="board-list-cards">
+  <ion-scroll direction="y" scrollbar-x="false" scrollbar-y="true"
+    on-drag-left="dragListSideways($event)" on-drag-right="dragListSideways($event)"
+    class="board-list-cards">
     <div class="board-list-cards-sortable" as-sortable="cardSortOptions" ng-model="column.cards">
       <div class="board-card"
            ng-repeat="card in column.cards"
@@ -10,7 +12,7 @@
            ng-include="'views/partials/card.html'">
       </div>
     </div>
-  </div>
+  </ion-scroll>
   <div class="board-list-footer last-child">
     <a title="Add card to column" ng-click="addNewCard(column)">Add a Card<i class="glyphicon glyphicon-plus addNewCard"></i>+</a>
   </div>

@@ -1,7 +1,8 @@
 <ion-view view-title="{{name}}" class="slide-left-right">
-  <ion-content style="background: #e8ebf1;"
+  <ion-content
   ng-controller="BoardController"
-  scrollbar-x="true" scrollbar-y="false" direction="x"
+  scrollbar-x="true" scrollbar-y="false" direction="x" delegate-handle="board"
+  on-swipe-left="swipeToNextList($event)" on-swipe-right="swipeToNextList($event)"
   ng-model="board"
   id="board">
     <div id="columns" k-drag-scroll-item class="board-lists row" data-ng-style="{'width':(listWidth*numLists)+'px'}"
