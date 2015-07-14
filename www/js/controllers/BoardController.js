@@ -119,16 +119,4 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
   $scope.addNewCard = function (column) {
     // BoardService.addNewCard($scope.board, column);
   };
-
-	$scope.dragScrollSections = function(event){
-    console.log("dragScrollSections");
-		event.preventDefault();
-    event.stopPropagation();
-		var delta = 0;
-		this.previousXPosition && (delta = event.clientX - this.previousXPosition);
-		this.previousXPosition = event.clientX;
-    console.log("dragScrollSections",delta);
-  		// var currentScroll = this.ui.sectionScroller.scrollLeft();
-		// this.ui.sectionScroller.scrollLeft(Math.ceil(currentScroll-delta));
-	};
 }]);
