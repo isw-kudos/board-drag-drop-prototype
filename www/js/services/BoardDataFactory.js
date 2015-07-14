@@ -13,7 +13,16 @@ angular.module('boards').service('BoardDataFactory', function () {
           "name": "Ideas",
           "childNodes": [
             {"name": "Come up with a POC for new Project"},
-            {"name": "Design new framework for reporting module"}
+            {"name": "Design new framework for reporting module"},
+            {"name": "Design new work for reporting module"},
+            {"name": "Design new UI for reporting module"},
+            {"name": "Design new work for reporting module"},
+            {"name": "Design new UI for reporting module"},
+            {"name": "Design new work for reporting module"},
+            {"name": "Design new UI for reporting module"},
+            {"name": "Design new stub for reporting module"},
+            {"name": "Design factory for reporting module"},
+            {"name": "Resolve framework"}
           ]
         },
         {
