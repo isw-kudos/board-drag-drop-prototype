@@ -1,10 +1,17 @@
+#board {
+  background-color: white;
+}
+.scroll, .board-lists, .list-view-outer, .list-view {
+  height:100%;
+}
 .list-view-outer {
-  /*float: left;*/
+  float: left;
+  margin:0;
   background:none;
   border:none;
 }
 .list-view {
-  margin: 10px 8px;
+  margin: 0px 8px;
   position: relative;
   min-height: 20px;
   border-radius: 5px;
@@ -27,7 +34,8 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 .board-list-cards {
-  padding: 7px 3px 0 7px;
+  max-height:calc(100% - 78px);
+  padding: 5px 3px 0 7px;
   border-width: 0 1px;
   overflow: hidden;
   clear: both;
