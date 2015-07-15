@@ -87,7 +87,7 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
   };
 
   //Dragging sideways in list does not move ion-content view as event does not propagate
-  $scope.dragListSideways = function(event){
+  $scope.dragListHorizontal = function(event){
     if(!$scope.dragging)
     {
       var gesture = event.gesture;
