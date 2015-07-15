@@ -2,7 +2,7 @@
   <ion-content
   ng-controller="BoardController"
   scrollbar-x="true" scrollbar-y="false" direction="x" delegate-handle="board"
-  on-swipe-left="swipeToNextList($event)" on-swipe-right="swipeToNextList($event)"
+  on-swipe-left="swipeToNextList(false)" on-swipe-right="swipeToNextList(true)"
   ng-model="board"
   id="board">
     <div id="columns" k-drag-scroll-item class="board-lists row" data-ng-style="{'width':(listWidth*numLists)+'px'}"

@@ -100,13 +100,16 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
     }
   };
 
-  $scope.swipeToNextList = function(event) {
+  $scope.swipeToNextList = function(right) {
     var boardScroll = $ionicScrollDelegate.$getByHandle('board');
     var currentColumnIndex = boardScroll.getScrollPosition().left/$scope.listWidth;
-    var newColumnIndex = event.gesture.direction=="right"
-                          ? Math.ceil(currentColumnIndex)-1
-                          : Math.floor(currentColumnIndex)+1;
-    boardScroll.scrollTo(newColumnIndex * $scope.listWidth - $scope.columnOffset,0,true);
+    var newColumnIndex = right ? Math.ceil(currentColumnIndex)-1
+                               : Math.floor(currentColumnIndex)+1;
+    $scope.scrollToList(newColumnIndex);
+  };
+  $scope.scrollToList = function(index) {
+    var boardScroll = $ionicScrollDelegate.$getByHandle('board');
+    boardScroll.scrollTo(index * $scope.listWidth - $scope.columnOffset,0,true);
   };
 
   $scope.openCard = function (column, card) {
