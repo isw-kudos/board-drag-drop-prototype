@@ -3,6 +3,7 @@
     <span>{{column.name}}</span>
   </div>
   <ion-scroll direction="y" scrollbar-x="false" scrollbar-y="true"
+    delegate-handle="{{'list'+$index}}"
     on-drag-left="dragListHorizontal($event)" on-drag-right="dragListHorizontal($event)"
     class="board-list-cards">
     <div class="board-list-cards-sortable" as-sortable="cardSortOptions" ng-model="column.cards">
