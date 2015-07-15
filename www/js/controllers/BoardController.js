@@ -109,8 +109,9 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
     boardScroll.scrollTo(newColumnIndex * $scope.listWidth - $scope.columnOffset,0,true);
   };
 
-  $scope.removeCard = function (column, card) {
-    BoardService.removeCard($scope.board, column, card);
+  $scope.openCard = function (column, card) {
+    console.log("open card");
+    // BoardService.removeCard($scope.board, column, card);
   };
 
   $scope.addNewCard = function (column) {
