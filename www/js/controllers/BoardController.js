@@ -12,8 +12,9 @@ angular.module('boards').factory('BoardSize', function() {
   };
 });
 
-angular.module('boards').controller('BoardController', ['$scope', 'BoardService', 'BoardDataFactory', '$ionicScrollDelegate', '$timeout','BoardSize',
-function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout, BoardSize) {
+angular.module('boards').controller('BoardController', ['$scope', 'BoardService', 'BoardDataFactory',
+                                                        '$ionicScrollDelegate', '$timeout','BoardSize','$ionicModal',
+function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout, BoardSize, $ionicModal) {
   var board = $scope.board = BoardService.kanbanBoard(BoardDataFactory.kanban);
 
   $scope.boardScroll = $ionicScrollDelegate.$getByHandle('board');
@@ -174,10 +175,20 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
 
   $scope.openCard = function (column, card) {
     console.log("open card");
+    $scope.currentCard = card;
     // BoardService.removeCard($scope.board, column, card);
+    $scope.modal.show();
   };
 
   $scope.addNewCard = function (column) {
     // BoardService.addNewCard($scope.board, column);
   };
+
+  //Create the modal to show card content
+  $ionicModal.fromTemplateUrl('views/card-modal.html', {
+    scope: $scope,
+    animation:'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
 }]);
