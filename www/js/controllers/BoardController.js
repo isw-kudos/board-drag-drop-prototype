@@ -16,6 +16,7 @@ angular.module('boards').controller('BoardController', ['$scope', 'BoardService'
 function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout, BoardSize) {
   var board = $scope.board = BoardService.kanbanBoard(BoardDataFactory.kanban);
 
+  $scope.boardScroll = $ionicScrollDelegate.$getByHandle('board');
   $scope.boardSize = BoardSize;
   $scope.$watch("boardSize", function() {
     $scope.boardScrollStyle = {
@@ -58,11 +59,11 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
     orderChanged: function (event) {},
     dragStart:function(event) {
       $scope.dragging = true;
-      if($ionicScrollDelegate) $ionicScrollDelegate.$getByHandle('board').freezeScroll(true);
+      $scope.boardScroll.freezeScroll(true);
     },
     dragEnd:function() {
       $scope.dragging = false;
-      if($ionicScrollDelegate) $ionicScrollDelegate.$getByHandle('board').freezeScroll(false);
+      $scope.boardScroll.freezeScroll(false);
       $scope.stopMoving();
     },
     dragMove:function(event){
@@ -91,7 +92,7 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
   $scope.moveTimer = null;
   $scope.startMoving = function(pixels,event) {
     function moveBy(scrollAmount) {
-      $ionicScrollDelegate.$getByHandle('board').scrollBy(scrollAmount,0,false);
+      $scope.boardScroll.scrollBy(scrollAmount,0,false);
       //inform the sortable that the mouse has 'moved' as the container moved underneath it
       //move the event creation out of this thread
       $timeout(function() {
@@ -112,25 +113,22 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
     if(!$scope.dragging)
     {
       var gesture = event.gesture;
-      var boardScroll = $ionicScrollDelegate.$getByHandle('board');
       //keep initial scroll position
       if(!gesture.startEvent.originalScroll)
-        gesture.startEvent.originalScroll = boardScroll.getScrollPosition().left;
+        gesture.startEvent.originalScroll = $scope.boardScroll.getScrollPosition().left;
       //move scroller by same amount dragged
-      boardScroll.scrollTo(gesture.startEvent.originalScroll-gesture.deltaX,0,false);
+      $scope.boardScroll.scrollTo(gesture.startEvent.originalScroll-gesture.deltaX,0,false);
     }
   };
 
   $scope.swipeToNextList = function(right) {
-    var boardScroll = $ionicScrollDelegate.$getByHandle('board');
-    var currentColumnIndex = boardScroll.getScrollPosition().left/$scope.boardSize.listWidth;
+    var currentColumnIndex = $scope.boardScroll.getScrollPosition().left/$scope.boardSize.listWidth;
     var newColumnIndex = right ? Math.ceil(currentColumnIndex)-1
                                : Math.floor(currentColumnIndex)+1;
     $scope.scrollToList(newColumnIndex);
   };
   $scope.scrollToList = function(index) {
-    var boardScroll = $ionicScrollDelegate.$getByHandle('board');
-    boardScroll.scrollTo(index * $scope.boardSize.listWidth - $scope.boardSize.columnOffset,0,true);
+    $scope.boardScroll.scrollTo(index * $scope.boardSize.listWidth - $scope.boardSize.columnOffset,0,true);
   };
 
   $scope.openCard = function (column, card) {
