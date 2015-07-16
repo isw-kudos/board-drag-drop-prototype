@@ -982,13 +982,13 @@
             element.bind('touchstart', listenForHold);
             element.bind('mousedown', listenForHold);
             element.bind('touchend', holdCancelled);
-            element.bind('mouseend', holdCancelled);
+            element.bind('mouseup', holdCancelled);
           };
           function unbindHoldListener() {
             element.unbind('touchstart', listenForHold);
             element.unbind('mousedown', listenForHold);
             element.unbind('touchend', holdCancelled);
-            element.unbind('mouseend', holdCancelled);
+            element.unbind('mouseup', holdCancelled);
           };
           bindDrag = bindHoldListener;
           unbindDrag = unbindHoldListener;
