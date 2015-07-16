@@ -5,13 +5,13 @@
   on-swipe-left="swipeToNextList(false)" on-swipe-right="swipeToNextList(true)"
   ng-model="board"
   id="board">
-    <div id="columns" k-drag-scroll-item class="board-lists row" data-ng-style="{'width':(listWidth*numLists)+'px'}"
+    <div id="columns" k-drag-scroll-item class="board-lists row" ng-style="boardScrollStyle"
     as-sortable="listSortOptions" ng-model="board.columns">
       <div as-sortable-item
           class="list-view-outer"
           ng-repeat="column in board.columns"
           ng-include="'views/partials/list.html'"
-          data-ng-style="{'width':(listWidth)+'px'}"
+          ng-style="listStyle"
           data-columnindex="{{$index}}">
       </div>
     </div>

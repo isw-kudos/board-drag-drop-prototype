@@ -3,23 +3,44 @@
 
 'use strict';
 
-angular.module('boards').controller('BoardController', ['$scope', 'BoardService', 'BoardDataFactory', '$ionicScrollDelegate', '$timeout',
-function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout) {
+angular.module('boards').factory('BoardSize', function() {
+  return {
+    optimalListWidth : 350,
+    columnOffset : 20,
+    listWidth : 350,
+    numLists : 1
+  };
+});
+
+angular.module('boards').controller('BoardController', ['$scope', 'BoardService', 'BoardDataFactory', '$ionicScrollDelegate', '$timeout','BoardSize',
+function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout, BoardSize) {
   var board = $scope.board = BoardService.kanbanBoard(BoardDataFactory.kanban);
 
-  $scope.columnOffset = 20;
-  function calculateListWidth() {
-    var optimalWidth = 400;
-    var screenWidth = document.body.clientWidth - (2*$scope.columnOffset);
-    $scope.listWidth = screenWidth > optimalWidth ? optimalWidth : screenWidth;
+  $scope.boardSize = BoardSize;
+  $scope.$watch("boardSize", function() {
+    $scope.boardScrollStyle = {
+      width:($scope.boardSize.listWidth * $scope.boardSize.numLists)+'px'
+    };
+    $scope.listStyle = {
+      width:($scope.boardSize.listWidth)+'px'
+    };
+  },true);
+  
+  function calculateListWidth(event) {
+    var screenWidth = document.body.clientWidth - (2*$scope.boardSize.columnOffset);
+    var numCols = Math.round(screenWidth/$scope.boardSize.optimalListWidth);
+    $scope.boardSize.listWidth = Math.floor(screenWidth/(numCols==0 ? 1 : numCols));
   }
-  calculateListWidth();
-  function updateNumLists() {
-    $scope.numLists = board.columns.length;
-  }
-  $scope.$watchCollection('board.columns', function() {
-    updateNumLists();
+  //ensure widgth correct when rotation & resize
+  window.addEventListener('resize', function(){
+    $timeout(calculateListWidth,0);
   });
+  calculateListWidth();
+
+  function updateNumLists() {
+    $scope.boardSize.numLists = board.columns.length;
+  }
+  $scope.$watchCollection('board.columns', updateNumLists);
   updateNumLists();
 
   $scope.listSortOptions = {
@@ -102,14 +123,14 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
 
   $scope.swipeToNextList = function(right) {
     var boardScroll = $ionicScrollDelegate.$getByHandle('board');
-    var currentColumnIndex = boardScroll.getScrollPosition().left/$scope.listWidth;
+    var currentColumnIndex = boardScroll.getScrollPosition().left/$scope.boardSize.listWidth;
     var newColumnIndex = right ? Math.ceil(currentColumnIndex)-1
                                : Math.floor(currentColumnIndex)+1;
     $scope.scrollToList(newColumnIndex);
   };
   $scope.scrollToList = function(index) {
     var boardScroll = $ionicScrollDelegate.$getByHandle('board');
-    boardScroll.scrollTo(index * $scope.listWidth - $scope.columnOffset,0,true);
+    boardScroll.scrollTo(index * $scope.boardSize.listWidth - $scope.boardSize.columnOffset,0,true);
   };
 
   $scope.openCard = function (column, card) {
