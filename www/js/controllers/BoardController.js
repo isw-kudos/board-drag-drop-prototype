@@ -59,40 +59,81 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
     orderChanged: function (event) {},
     dragStart:function(event) {
       $scope.dragging = true;
-      $scope.boardScroll.freezeScroll(true);
+      $ionicScrollDelegate.freezeAllScrolls(true);
     },
     dragEnd:function() {
       $scope.dragging = false;
-      $scope.boardScroll.freezeScroll(false);
+      $scope.dragTarget = null;
+      $ionicScrollDelegate.freezeAllScrolls(false);
       $scope.stopMoving();
     },
     dragMove:function(event){
-      // console.log("pos",event);
-      // console.log("page",document.body.clientWidth);
-      var distToLeftEdge = event.nowX;
-      var distToRightEdge = document.body.clientWidth - event.nowX;
-      var tollerance=150, scrollOffset=0, maxScrollPixels=5, speed=2;
-      var scrollDistance = (distToRightEdge < tollerance)
-                              ? tollerance - distToRightEdge + scrollOffset
-                              : (distToLeftEdge < tollerance)
-                                  ? distToLeftEdge - tollerance - scrollOffset
-                                  : 0;
       $scope.stopMoving();
-      var scrollAmount = scrollDistance/tollerance * maxScrollPixels * speed;
-      $scope.startMoving(scrollAmount,event);
+
+      function getScrollInfo(distToPosLimit,distToNegLimit,options) {
+        var maxScrollPixels = 5;
+        var distance = (distToPosLimit < options.tollerance)
+                          ? options.tollerance - distToPosLimit
+                          : (distToNegLimit < options.tollerance)
+                            ? distToNegLimit - options.tollerance
+                            : 0;
+        return {
+          distance:distance,
+          pixels:distance/options.tollerance * maxScrollPixels * options.speed
+        }
+      }
+
+      var distToLeftEdge = event.nowX;
+      var distToRightEdge = document.body.clientWidth - distToLeftEdge;
+      var xScroll = getScrollInfo(distToRightEdge,distToLeftEdge,{
+        tollerance:150,
+        speed:2
+      });
+
+      var scrollAmounts = {
+        x:xScroll.pixels,
+        y:0
+      };
+      var scroller = $scope.boardScroll;
+
+      //Dragging in list. Check if should scroll
+      if($scope.dragTarget)
+      {
+        //Get Scroll container for determining where mouse is relative to it
+        var listEl = $scope.dragTarget.element.parent().parent();
+        var distToTopEdge = event.nowY - listEl.offset().top;
+        var distToBottomEdge = listEl[0].clientHeight - distToTopEdge;
+        var yScroll = getScrollInfo(distToBottomEdge,distToTopEdge,{
+          tollerance:50,
+          speed:2
+        });
+
+        //Check which direction of scroll is more necessary
+        if(Math.abs(yScroll.distance) > Math.abs(xScroll.distance))
+        {
+          scrollAmounts.x = 0;
+          scrollAmounts.y = yScroll.pixels;
+          scroller = $ionicScrollDelegate.$getByHandle('list'+$scope.dragTarget.$parent.modelValue.id);
+        }
+      }
+      //Start the scroll
+      $scope.startMoving(scroller,scrollAmounts,event);
     }
   };
 
   $scope.cardSortOptions = angular.extend({}, $scope.listSortOptions, {
     accept: function (sourceItemHandleScope, destSortableScope) {
-     return (sourceItemHandleScope.$parent.modelValue instanceof Card);
+      var accept = (sourceItemHandleScope.$parent.modelValue instanceof Card);
+      if(accept)
+        $scope.dragTarget = destSortableScope;
+      return accept;
     }
   });
 
   $scope.moveTimer = null;
-  $scope.startMoving = function(pixels,event) {
-    function moveBy(scrollAmount) {
-      $scope.boardScroll.scrollBy(scrollAmount,0,false);
+  $scope.startMoving = function(scroller,pixels,event) {
+    function moveBy(pixels) {
+      scroller.scrollBy(pixels.x,pixels.y,false);
       //inform the sortable that the mouse has 'moved' as the container moved underneath it
       //move the event creation out of this thread
       $timeout(function() {
@@ -101,7 +142,7 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
         document.dispatchEvent(e);
       });
     }
-    if(pixels!=0)
+    if(pixels.x!=0 || pixels.y!=0)
       $scope.moveTimer = $timeout(function(){moveBy(pixels);}, 10);
   };
   $scope.stopMoving = function(){
