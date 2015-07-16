@@ -7,20 +7,20 @@
 angular.module('boards').factory('BoardManipulator', function () {
   return {
 
-    addColumn: function (board, columnName) {
-      board.columns.push(new List(columnName));
+    addColumn: function (board, id, columnName) {
+      board.columns.push(new List(id, columnName));
     },
 
     addCardToColumn: function (board, column, name, description) {
       angular.forEach(board.columns, function (col) {
-        if (col.name === column.name) {
-          col.cards.push(new Card(name, column.name, description));
+        if (col.id === column.id) {
+          col.cards.push(new Card("", name, column.id, column.name, description));
         }
       });
     },
     removeCardFromColumn: function (board, column, card) {
       angular.forEach(board.columns, function (col) {
-        if (col.name === column.name) {
+        if (col.id === column.id) {
           col.cards.splice(col.cards.indexOf(card), 1);
         }
       });

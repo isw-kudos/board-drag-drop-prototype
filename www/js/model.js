@@ -2,22 +2,25 @@
 /*global angular: false */
 
 'use strict';
-function Board(name) {
+function Board(id, name) {
   return {
+    id: id,
     name: name,
     columns: []
   };
 }
 
-function List(name) {
+function List(id,name) {
   return {
+    id: id,
     name: name,
     cards: []
   };
 }
 
 
-function Card(name, status, description) {
+function Card(id, name, status, description) {
+  this.id = id;
   this.name = name;
   this.status = status;
   this.description = description;

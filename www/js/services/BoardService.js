@@ -25,14 +25,14 @@ angular.module('boards').service('BoardService', ['$modal', 'BoardManipulator', 
       });
       modalInstance.result.then(function (cardDetails) {
         if (cardDetails) {
-          BoardManipulator.addCardToColumn(board, cardDetails.column, cardDetails.title, cardDetails.details);
+          BoardManipulator.addCardToColumn(board, cardDetails.column, "", cardDetails.title, cardDetails.details);
         }
       });
     },
     kanbanBoard: function (board) {
-      var kanbanBoard = new Board(board.name);
+      var kanbanBoard = new Board(board.id, board.name);
       angular.forEach(board.childNodes, function (node) {
-        BoardManipulator.addColumn(kanbanBoard, node.name);
+        BoardManipulator.addColumn(kanbanBoard, node.id, node.name);
         angular.forEach(node.childNodes, function (card) {
           BoardManipulator.addCardToColumn(kanbanBoard, node, card.name, card.description);
         });
