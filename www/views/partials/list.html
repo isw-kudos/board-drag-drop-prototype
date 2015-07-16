@@ -1,6 +1,8 @@
 <div class="list-view">
   <div class="board-list-header" as-sortable-item-handle>
-    <span>{{column.name}}</span>
+    <label class="item item-input plain">
+      <input ng-model="column.name" type="text" />
+    </label>
   </div>
   <ion-scroll direction="y" scrollbar-x="false" scrollbar-y="true"
     delegate-handle="{{'list'+column.id}}"

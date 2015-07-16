@@ -18,7 +18,7 @@
 }
 .board-list-header {
   border-radius: 5px 5px 0 0;
-  padding: 8px;
+  /*padding: 8px;*/
   color: #FFF;
   font-weight: bold;
   font-size: 1.1em;
@@ -100,4 +100,10 @@
 .removeCard {
     padding: 12px;
     color: #444;
+}
+.item-input.plain, .item-input.plain input {
+  background-color:transparent;
+  border:none;
+  font:inherit;
+  color:inherit;
 }
