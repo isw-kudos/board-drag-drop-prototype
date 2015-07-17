@@ -12,10 +12,9 @@ angular.module('boards').factory('BoardSize', function() {
   };
 });
 
-angular.module('boards').controller('BoardController', ['$scope', 'BoardService', 'BoardDataFactory',
-                                                        '$ionicScrollDelegate', '$timeout','BoardSize','$ionicModal',
-function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout, BoardSize, $ionicModal) {
-  var board = $scope.board = BoardService.kanbanBoard(BoardDataFactory.kanban);
+angular.module('boards').controller('BoardController', ['$scope','BoardService','$ionicScrollDelegate','$timeout','BoardSize','$ionicModal',
+function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ionicModal) {
+  var board = $scope.board = BoardService.getBoard("kanban");
 
   $scope.boardScroll = $ionicScrollDelegate.$getByHandle('board');
   $scope.boardSize = BoardSize;

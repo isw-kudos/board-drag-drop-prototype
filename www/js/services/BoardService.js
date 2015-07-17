@@ -3,7 +3,7 @@
 
 'use strict';
 
-angular.module('boards').service('BoardService', ['$modal', 'BoardManipulator', function ($modal, BoardManipulator) {
+angular.module('boards').service('BoardService', ['BoardDataFactory', 'BoardManipulator', function (BoardDataFactory, BoardManipulator) {
 
   return {
     removeCard: function (board, column, card) {
@@ -12,32 +12,13 @@ angular.module('boards').service('BoardService', ['$modal', 'BoardManipulator', 
       }
     },
 
-    addNewCard: function (board, column) {
-      var modalInstance = $modal.open({
-        templateUrl: 'views/partials/newCard.html',
-        controller: 'NewCardController',
-        backdrop: 'static',
-        resolve: {
-          column: function () {
-            return column;
-          }
-        }
-      });
-      modalInstance.result.then(function (cardDetails) {
-        if (cardDetails) {
-          BoardManipulator.addCardToColumn(board, cardDetails.column, "", cardDetails.title, cardDetails.details);
-        }
-      });
+    addNewCard: function (board, list) {
+      //open modal
+      // BoardManipulator.addCardToList(board, list, card.name);
     },
-    kanbanBoard: function (board) {
-      var kanbanBoard = new Board(board.id, board.name);
-      angular.forEach(board.childNodes, function (node) {
-        BoardManipulator.addColumn(kanbanBoard, node.id, node.name);
-        angular.forEach(node.childNodes, function (card) {
-          BoardManipulator.addCardToColumn(kanbanBoard, node, card.name, card.description);
-        });
-      });
-      return kanbanBoard;
+    getBoard: function (boardId) {
+      var boardData = BoardDataFactory[boardId];
+      return BoardManipulator.buildNodes(boardData);
     }
   };
 }]);
