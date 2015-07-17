@@ -16,7 +16,7 @@ angular.module('boards').service('BoardDataFactory', function () {
           "name": "Ideas",
           "commonType":"section",
           "childNodes": [
-            {"id":"a","name": "Come up with a POC for new Project","commonType":"todo","completed":0},
+            {"id":"a","name": "Come up with a POC for new Project","commonType":"todo","completed":1},
             {"id":"b","name": "Design new framework for reporting module","commonType":"entry"},
             {"id":"c","name": "Design new work for reporting module","commonType":"entry"},
             {"id":"d","name": "Design new UI for reporting module","commonType":"todo","completed":1},
@@ -35,7 +35,7 @@ angular.module('boards').service('BoardDataFactory', function () {
           "commonType":"section",
           "childNodes": [
             {"id":"2a","name": "Explore new IDE for Development","description": "Testing Card Details","commonType":"todo","completed":0},
-            {"id":"2b","name": "Get new resource for new Project","description": "Testing Card Details","commonType":"entry"}
+            {"id":"2b","name": "Get new resource for new Project","description": "Testing Card Details","commonType":"todo","completed":1}
           ]
         },
         {
