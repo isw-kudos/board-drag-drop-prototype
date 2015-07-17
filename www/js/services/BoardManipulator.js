@@ -11,8 +11,10 @@ angular.module('boards').factory('BoardManipulator', function () {
       model = new Board(node.id, node.name);
     else if(node.commonType=="section")
       model = new List(node.id, node.commonType, node.name);
-    else if (node.commonType=="entry" || node.commonType=="todo")
-      model = new Card(node.id, node.commonType, node.completed, node.name, node.description);
+    else if (node.commonType=="entry")
+      model = new Card(node.id, node.commonType, null, node.name, node.description);
+    else if (node.commonType=="todo")
+      model = new Card(node.id, node.commonType, node.completed==1, node.name, node.description);
     return model;
   }
 
