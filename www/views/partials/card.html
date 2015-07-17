@@ -1,6 +1,9 @@
 <div class="card-sort-handle row" as-sortable-item-handle ng-click="openCard(list, card)">
   <div class="">
-    <span class="card-title">{{card.name}}</span>
+    <label class="checkbox" ng-if="card.isTodo()">
+       <input type="checkbox" ng-model="card.completed"  ng-click="$event.stopPropagation();">
+     </label>
+    <span class="card-title" ng-class="{'completed':card.completed}">{{card.name}}</span>
   </div>
   <div class="card-content">
   </div>
