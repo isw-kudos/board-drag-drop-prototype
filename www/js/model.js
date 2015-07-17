@@ -28,5 +28,14 @@ function Card(id,type,completed,name,description,status) {
   this.description = description;
   this.status = status;
   this.childNodes = [];
+
+  this.isTodo = function() {
+    return this.type=="todo";
+  }
+
+  this.isComplete = function() {
+    return typeof this.completed=="boolean" && this.completed;
+  }
+
   return this;
 }
