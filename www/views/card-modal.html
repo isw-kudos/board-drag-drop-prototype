@@ -1,8 +1,11 @@
-<ion-modal-view>
+<ion-modal-view class="card-modal">
   <ion-header-bar class="bar bar-header bar-calm">
     <h1 class="title">
-      <label class="item item-input plain">
-        <input ng-model="currentCard.name" type="text">
+      <label class="checkbox" ng-if="currentCard.isTodo()">
+         <input type="checkbox" ng-model="currentCard.completed">
+       </label>
+      <label class="item item-input plain card-name">
+        <input ng-model="currentCard.name" type="text" ng-class="{'completed':currentCard.completed}">
       </label>
     </h1>
     <button class="button button-clear button-primary" ng-click="modal.hide()">X</button>

@@ -72,6 +72,7 @@
     font-weight: bold;
     line-height: 1.5em;
     padding: 2px 1px;
+    vertical-align: sub;
     /*display: block;*/
 }
 .as-sortable-item {
@@ -112,5 +113,20 @@
   color: gray;
 }
 .card-sort-handle .checkbox {
-  padding: 0;
+  padding: 0 7px 0 0;
+  float:left;
+}
+.card-modal .title .checkbox {
+  float:left;
+  padding-left:4px;
+}
+.card-modal .card-name {
+  padding-left:4px;
+}
+.card-modal .checkbox + .card-name {
+  margin-left:40px;
+}
+.card-modal .card-name input {
+  margin-top:-2px;
+  line-height: 1.5em;
 }
