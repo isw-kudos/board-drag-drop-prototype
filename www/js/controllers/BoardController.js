@@ -6,7 +6,7 @@
 angular.module('boards').factory('BoardSize', function() {
   return {
     optimalListWidth : 350,
-    columnOffset : 20,
+    listOffset : 20,
     listWidth : 350,
     numLists : 1
   };
@@ -29,7 +29,7 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
   },true);
   
   function calculateListWidth(event) {
-    var screenWidth = document.body.clientWidth - (2*$scope.boardSize.columnOffset);
+    var screenWidth = document.body.clientWidth - (2*$scope.boardSize.listOffset);
     var numCols = Math.round(screenWidth/$scope.boardSize.optimalListWidth);
     $scope.boardSize.listWidth = Math.floor(screenWidth/(numCols==0 ? 1 : numCols));
   }
@@ -40,9 +40,9 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
   calculateListWidth();
 
   function updateNumLists() {
-    $scope.boardSize.numLists = board.columns.length;
+    $scope.boardSize.numLists = board.childNodes.length;
   }
-  $scope.$watchCollection('board.columns', updateNumLists);
+  $scope.$watchCollection('board.childNodes', updateNumLists);
   updateNumLists();
 
   $scope.listSortOptions = {
@@ -55,7 +55,7 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
      return !(sourceItemHandleScope.$parent.modelValue instanceof Card);
     },
     itemMoved: function (event) {
-      event.source.itemScope.modelValue.status = event.dest.sortableScope.$parent.column.name;
+      event.source.itemScope.modelValue.status = event.dest.sortableScope.$parent.list.name;
     },
     orderChanged: function (event) {},
     dragStart:function(event) {
@@ -164,24 +164,24 @@ function ($scope, BoardService, BoardDataFactory, $ionicScrollDelegate, $timeout
   };
 
   $scope.swipeToNextList = function(right) {
-    var currentColumnIndex = $scope.boardScroll.getScrollPosition().left/$scope.boardSize.listWidth;
-    var newColumnIndex = right ? Math.ceil(currentColumnIndex)-1
-                               : Math.floor(currentColumnIndex)+1;
-    $scope.scrollToList(newColumnIndex);
+    var currentListIndex = $scope.boardScroll.getScrollPosition().left/$scope.boardSize.listWidth;
+    var newListIndex = right ? Math.ceil(currentListIndex)-1
+                               : Math.floor(currentListIndex)+1;
+    $scope.scrollToList(newListIndex);
   };
   $scope.scrollToList = function(index) {
-    $scope.boardScroll.scrollTo(index * $scope.boardSize.listWidth - $scope.boardSize.columnOffset,0,true);
+    $scope.boardScroll.scrollTo(index * $scope.boardSize.listWidth - $scope.boardSize.listOffset,0,true);
   };
 
-  $scope.openCard = function (column, card) {
+  $scope.openCard = function (list, card) {
     console.log("open card");
     $scope.currentCard = card;
-    // BoardService.removeCard($scope.board, column, card);
+    // BoardService.removeCard($scope.board, list, card);
     $scope.modal.show();
   };
 
-  $scope.addNewCard = function (column) {
-    // BoardService.addNewCard($scope.board, column);
+  $scope.addNewCard = function (list) {
+    // BoardService.addNewCard($scope.board, list);
   };
 
   //Create the modal to show card content

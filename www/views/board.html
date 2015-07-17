@@ -6,10 +6,10 @@
   ng-model="board"
   id="board">
     <div id="columns" k-drag-scroll-item class="board-lists row" ng-style="boardScrollStyle"
-    as-sortable="listSortOptions" ng-model="board.columns">
+    as-sortable="listSortOptions" ng-model="board.childNodes">
       <div as-sortable-item
           class="list-view-outer"
-          ng-repeat="column in board.columns"
+          ng-repeat="list in board.childNodes"
           ng-include="'views/partials/list.html'"
           ng-style="listStyle"
           data-columnindex="{{$index}}">

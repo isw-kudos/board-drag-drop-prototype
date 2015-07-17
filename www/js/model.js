@@ -2,27 +2,31 @@
 /*global angular: false */
 
 'use strict';
-function Board(id, name) {
+function Board(id,name) {
   return {
     id: id,
     name: name,
-    columns: []
+    type: "board",
+    childNodes: []
   };
 }
 
-function List(id,name) {
+function List(id,type,name) {
   return {
     id: id,
+    type: type,
     name: name,
-    cards: []
+    childNodes: []
   };
 }
 
-
-function Card(id, name, status, description) {
+function Card(id,type,completed,name,description,status) {
   this.id = id;
+  this.type = type;
+  this.completed = completed;
   this.name = name;
-  this.status = status;
   this.description = description;
+  this.status = status;
+  this.childNodes = [];
   return this;
 }
