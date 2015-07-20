@@ -34,6 +34,7 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 .board-list-cards {
+  max-height:85%; /* fallback */
   max-height:calc(100% - 96px);
   padding: 5px 5px 0 5px;
   border-width: 0 1px;
@@ -41,6 +42,7 @@
   clear: both;
 }
 .showing-card-add .board-list-cards {
+  max-height:50%; /* fallback - keyboard open*/
   max-height:calc(100% - 150px);
 }
 .board-list-cards, .board-list-footer {
