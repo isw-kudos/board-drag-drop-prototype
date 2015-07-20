@@ -26,7 +26,7 @@ function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ioni
       width:($scope.boardSize.listWidth)+'px'
     };
   },true);
-  
+
   function calculateListWidth(event) {
     var screenWidth = document.body.clientWidth - (2*$scope.boardSize.listOffset);
     var numCols = Math.round(screenWidth/$scope.boardSize.optimalListWidth);
@@ -87,7 +87,7 @@ function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ioni
       var distToRightEdge = document.body.clientWidth - distToLeftEdge;
       var xScroll = getScrollInfo(distToRightEdge,distToLeftEdge,{
         tollerance:150,
-        speed:2
+        speed:3.5
       });
 
       var scrollAmounts = {
@@ -104,8 +104,8 @@ function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ioni
         var distToTopEdge = event.nowY - listEl.offset().top;
         var distToBottomEdge = listEl[0].clientHeight - distToTopEdge;
         var yScroll = getScrollInfo(distToBottomEdge,distToTopEdge,{
-          tollerance:50,
-          speed:2
+          tollerance:70,
+          speed:3.5
         });
 
         //Check which direction of scroll is more necessary
