@@ -113,12 +113,16 @@ function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ioni
         {
           scrollAmounts.x = 0;
           scrollAmounts.y = yScroll.pixels;
-          scroller = $ionicScrollDelegate.$getByHandle('list'+$scope.dragTarget.$parent.modelValue.id);
+          scroller = $scope.getListScrollDelegateById($scope.dragTarget.$parent.modelValue.id);
         }
       }
       //Start the scroll
       $scope.startMoving(scroller,scrollAmounts,event);
     }
+  };
+
+  $scope.getListScrollDelegateById = function (id) {
+    return $ionicScrollDelegate.$getByHandle('list'+id);
   };
 
   $scope.cardSortOptions = angular.extend({}, $scope.listSortOptions, {
@@ -185,6 +189,9 @@ function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ioni
 
   $scope.addNewCard = function (type,newCard,list) {
     BoardService.addNewCard($scope.board,type,newCard,list);
+    $timeout(function(){
+      $scope.getListScrollDelegateById(list.id).scrollBottom(true);
+    });
   };
 
   //Create the modal to show card content
