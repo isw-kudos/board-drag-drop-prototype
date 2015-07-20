@@ -3,15 +3,6 @@
 
 'use strict';
 
-angular.module('boards').factory('BoardSize', function() {
-  return {
-    optimalListWidth : 350,
-    listOffset : 20,
-    listWidth : 350,
-    numLists : 1
-  };
-});
-
 angular.module('boards').controller('BoardController', ['$scope','BoardService','$ionicScrollDelegate','$timeout','BoardSize','$ionicModal',
 function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ionicModal) {
   var board = $scope.board = BoardService.getBoard("kanban");
