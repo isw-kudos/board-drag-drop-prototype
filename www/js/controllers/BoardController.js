@@ -181,12 +181,6 @@ function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ioni
     $scope.modal.show();
   };
 
-  $scope.focusNewCardInput = function(event){
-    $timeout(function(){
-      $(event.target.parentNode).find('.add-new-card input').focus();
-    });
-  };
-
   $scope.addNewCard = function (type,newCard,list) {
     BoardService.addNewCard($scope.board,type,newCard,list);
     $timeout(function(){
