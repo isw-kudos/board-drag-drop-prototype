@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('boards').factory('BoardManipulator', function () {
-  function getNodeByType(node) {
+  function getNodeByType(node,parent) {
     var model = null;
     if(node.commonType=="board")
       model = new Board(node.id, node.name);
@@ -38,10 +38,10 @@ angular.module('boards').factory('BoardManipulator', function () {
       board.childNodes.push(new List(id, columnName));
     },
 
-    addCardToList: function (board, list, name) {
+    addCardToList: function (board, type, name, list) {
       angular.forEach(board.childNodes, function (col) {
         if (col.id === list.id) {
-          col.childNodes.push(new Card("", "entry", false, name, "", list.id));
+          col.childNodes.push(new Card("", type, false, name, ""));
         }
       });
     },

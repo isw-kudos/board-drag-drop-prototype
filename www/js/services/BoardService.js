@@ -12,9 +12,9 @@ angular.module('boards').service('BoardService', ['BoardDataFactory', 'BoardMani
       }
     },
 
-    addNewCard: function (board, list) {
+    addNewCard: function (board, type, card, list) {
       //open modal
-      // BoardManipulator.addCardToList(board, list, card.name);
+      BoardManipulator.addCardToList(board, type, card.name, list);
     },
     getBoard: function (boardId) {
       var boardData = BoardDataFactory[boardId];
