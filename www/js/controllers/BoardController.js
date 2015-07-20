@@ -173,14 +173,18 @@ function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ioni
   };
 
   $scope.openCard = function (list, card) {
-    console.log("open card");
     $scope.currentCard = card;
-    // BoardService.removeCard($scope.board, list, card);
     $scope.modal.show();
   };
 
-  $scope.addNewCard = function (list) {
-    // BoardService.addNewCard($scope.board, list);
+  $scope.focusNewCardInput = function(event){
+    $timeout(function(){
+      $(event.target.parentNode).find('.add-new-card input').focus();
+    });
+  };
+
+  $scope.addNewCard = function (type,newCard,list) {
+    BoardService.addNewCard($scope.board,type,newCard,list);
   };
 
   //Create the modal to show card content
