@@ -52,17 +52,20 @@
   border-width: 0 1px 1px;
   padding: 8px;
 }
-
 .board-lists.as-sortable-un-selectable, .as-sortable-dragging {
 /* 	cursor: url(./resources/images/closedhand.cur), auto; */
 	cursor: -moz-grabbing !important;
 	cursor: -webkit-grabbing !important;
 	cursor: grabbing !important;
 }
-
 .board-card {
-   padding: 8px;
-   margin:0px;
+  padding: 8px;
+  margin:0px;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  -webkit-box-shadow:  1px 1px 3px 0px rgba(50, 50, 50, 0.2);
+	-moz-box-shadow:     1px 1px 3px 0px rgba(50, 50, 50, 0.2);
+	box-shadow:          1px 1px 3px 0px rgba(50, 50, 50, 0.2);
 }
 .board-card:not(:last-child) {
    margin-bottom:6px;
@@ -77,16 +80,11 @@
     line-height: 1.5em;
     padding: 2px 1px;
     vertical-align: sub;
-    /*display: block;*/
-}
-.as-sortable-item {
-  /*margin:0px;*/
 }
 .as-sortable-item-handle {
   cursor:default;
 }
 .as-sortable-drag {
-/* 	position: absolute; */
 	opacity: 0.9;
 	filter:alpha(opacity=90);
 	transform: rotate(3deg);
@@ -96,10 +94,6 @@
 	-webkit-transform: rotate(3deg); /* Safari and Chrome */
 	-webkit-backface-visibility: hidden;
 	z-index:10000;
-}
-.removeCard {
-    padding: 12px;
-    color: #444;
 }
 .item-input.plain, .item-input.plain input {
   background-color:transparent;
