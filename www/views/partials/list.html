@@ -1,4 +1,4 @@
-<div class="list-view">
+<div class="list-view" ng-class="{'showing-card-add':addCard}">
   <div class="board-list-header" as-sortable-item-handle>
     <label class="item item-input plain">
       <input ng-model="list.name" type="text" />
@@ -17,6 +17,16 @@
     </div>
   </ion-scroll>
   <div class="board-list-footer last-child">
-    <a title="Add card" ng-click="addNewCard(list)">Add a Card<i class="glyphicon glyphicon-plus addNewCard"></i>+</a>
+    <div ng-show="!addCard" ng-click="addCard=true; focusNewCardInput($event)">Add a Card</div>
+    <div ng-show="addCard" class="add-new-card">
+      <label class="item item-input">
+        <input ng-model="newCard.name" type="text" ng-blur="addCard=false; newCard=null;" />
+      </label>
+      <div class="btn-group add-new-card-control" ng-click="addCard=false; newCard=null;">
+        <button class="button button-positive" ng-click="addNewCard('todo',newCard,list)">To Do</button>
+        <button class="button button-calm" ng-click="addNewCard('entry',newCard,list)">Entry</button>
+        <button class="button button-light">X</button>
+      </div>
+    </div>
   </div>
 </div>

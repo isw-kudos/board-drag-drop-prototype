@@ -34,11 +34,14 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 .board-list-cards {
-  max-height:calc(100% - 78px);
+  max-height:calc(100% - 85px);
   padding: 5px 3px 0 7px;
   border-width: 0 1px;
   overflow: hidden;
   clear: both;
+}
+.showing-card-add .board-list-cards {
+  max-height:calc(100% - 155px);
 }
 .board-list-cards, .board-list-footer {
   background-color: #f2f2f2;
@@ -61,6 +64,8 @@
 .board-card {
    padding: 8px;
    margin:0px;
+}
+.board-card:not(:last-child) {
    margin-bottom:6px;
 }
 .board-list-cards-sortable {
@@ -93,10 +98,22 @@
 	-webkit-backface-visibility: hidden;
 	z-index:10000;
 }
-.addNewCard {
-    float: right;
-    padding-right: 30px;
-    color:  green;
+.add-new-card-control {
+  clear:both;
+  overflow: hidden;
+}
+.add-new-card .item-input {
+  border: 1px solid #AAAAAA;
+  margin-bottom: 6px;
+}
+.btn-group>.button:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.add-new-card-control button {
+  float:left;
+  min-height: 30px;
+  line-height: 36px;
 }
 .removeCard {
     padding: 12px;
