@@ -1,6 +1,3 @@
-#board {
-  background-color: white;
-}
 .scroll, .board-lists, .list-view-outer, .list-view {
   height:100%;
 }

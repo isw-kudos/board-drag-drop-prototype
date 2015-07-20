@@ -3,9 +3,8 @@
   ng-controller="BoardController"
   scrollbar-x="true" scrollbar-y="false" direction="x" delegate-handle="board"
   on-swipe-left="swipeToNextList(false)" on-swipe-right="swipeToNextList(true)"
-  ng-model="board"
-  id="board">
-    <div id="columns" k-drag-scroll-item class="board-lists row" ng-style="boardScrollStyle"
+  ng-model="board">
+    <div k-drag-scroll-item class="board-lists row" ng-style="boardScrollStyle"
     as-sortable="listSortOptions" ng-model="board.childNodes">
       <div as-sortable-item
           class="list-view-outer"

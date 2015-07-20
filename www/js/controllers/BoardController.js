@@ -46,7 +46,7 @@ function ($scope, BoardService, $ionicScrollDelegate, $timeout, BoardSize, $ioni
 
   $scope.listSortOptions = {
     //this is the container to attach the element when dragging
-    containment: '#columns',
+    containment: '.board-lists',
     //this is position type used on the dragging element (relative works with scrolled view)
     containerPositioning:"relative",
     //scrollableContainer:"#columns",//used to calculate position of drag item
