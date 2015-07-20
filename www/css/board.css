@@ -51,7 +51,7 @@
 .list-view .board-list-footer {
   border-radius: 0 0 5px 5px;
   border-width: 0 1px 1px;
-  padding: 8px 10px;
+  padding: 8px;
 }
 
 .board-lists.as-sortable-un-selectable, .as-sortable-dragging {
