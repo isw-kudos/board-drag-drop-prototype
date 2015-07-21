@@ -8,13 +8,11 @@ angular.module('boards')
   function getNodeByType(node,parent) {
     var model = null;
     if(node.commonType=="board")
-      model = new Board(node.id, node.name);
+      model = new Board(node);
     else if(node.commonType=="section")
-      model = new List(node.id, node.commonType, node.name);
-    else if (node.commonType=="entry")
-      model = new Card(node.id, node.commonType, null, node.name, node.description);
-    else if (node.commonType=="todo")
-      model = new Card(node.id, node.commonType, node.completed==1, node.name, node.description);
+      model = new List(node);
+    else if (node.commonType=="entry" || node.commonType=="todo")
+      model = new Card(node);
     return model;
   }
 
@@ -26,7 +24,7 @@ angular.module('boards')
       angular.forEach(node.childNodes, function (childNode) {
         var child = buildNodes(childNode);
         if(child!==null)
-          model.childNodes.push(child);
+          model.addChild(child);
       });
     return model;
   }
