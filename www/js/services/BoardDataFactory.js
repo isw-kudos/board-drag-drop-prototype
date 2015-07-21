@@ -1,10 +1,10 @@
-/*jshint undef: false, unused: false, indent: 2*/
+/*jshint node:true, undef: false, unused: false, indent: 2 */
 /*global angular: false */
-
 'use strict';
 
-angular.module('boards').service('BoardDataFactory', function () {
+angular.module('boards')
 
+.service('BoardDataFactory', function () {
   return {
     kanban: {
       "id":"0",

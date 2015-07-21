@@ -1,15 +1,15 @@
-/*jshint undef: false, unused: false, indent: 2*/
+/*jshint node:true, undef: false, unused: false, indent: 2 */
 /*global angular: false */
-
 'use strict';
 
-angular.module('boards').service('BoardService', ['BoardDataFactory', 'BoardManipulator', function (BoardDataFactory, BoardManipulator) {
+angular.module('boards')
 
+.service('BoardService', ['BoardDataFactory', 'BoardManipulator', function (BoardDataFactory, BoardManipulator) {
   return {
     removeCard: function (board, column, card) {
-      if (confirm('Are You sure to Delete?')) {
-        BoardManipulator.removeCardFromColumn(board, column, card);
-      }
+      // if (confirm('Are You sure to Delete?')) {
+        // BoardManipulator.removeCardFromColumn(board, column, card);
+      // }
     },
 
     addNewCard: function (board, type, card, list) {

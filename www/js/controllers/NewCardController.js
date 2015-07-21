@@ -1,11 +1,10 @@
-/*jshint undef: false, unused: false, indent: 2*/
+/*jshint node:true, undef: false, unused: false, indent: 2 */
 /*global angular: false */
-
-
 'use strict';
 
-angular.module('boards').controller('NewCardController', ['$scope', '$modalInstance', 'column', function ($scope, $modalInstance, column) {
+angular.module('boards')
 
+.controller('NewCardController', ['$scope', '$modalInstance', 'column', function ($scope, $modalInstance, column) {
   function initScope(scope) {
     scope.columnName = column.name;
     scope.column = column;

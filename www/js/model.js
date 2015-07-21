@@ -1,4 +1,4 @@
-/*jshint undef: false, unused: false, indent: 2*/
+/*jshint node:true, undef: false, unused: false, indent: 2 */
 /*global angular: false */
 
 'use strict';
@@ -31,11 +31,11 @@ function Card(id,type,completed,name,description,status) {
 
   this.isTodo = function() {
     return this.type=="todo";
-  }
+  };
 
   this.isComplete = function() {
     return typeof this.completed=="boolean" && this.completed;
-  }
+  };
 
   return this;
 }

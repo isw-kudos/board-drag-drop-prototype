@@ -1,4 +1,6 @@
-angular.module('boards').factory('BoardSize', function() {
+angular.module('boards')
+
+.factory('BoardSize', function() {
   return {
     optimalListWidth : 350,
     listOffset : 20,

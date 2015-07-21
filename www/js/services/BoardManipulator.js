@@ -1,10 +1,10 @@
-/*jshint undef: false, unused: false, indent: 2*/
-/*global angular: false */
-
-
+/*jshint node:true, undef: false, unused: false, indent: 2 */
+/*global angular: false, Board, List, Card */
 'use strict';
 
-angular.module('boards').factory('BoardManipulator', function () {
+angular.module('boards')
+
+.factory('BoardManipulator', function () {
   function getNodeByType(node,parent) {
     var model = null;
     if(node.commonType=="board")
@@ -20,12 +20,12 @@ angular.module('boards').factory('BoardManipulator', function () {
 
   function buildNodes(node) {
     var model = getNodeByType(node);
-    if(model==null)
+    if(model===null)
       console.log("cannot determine node",node);
     else
       angular.forEach(node.childNodes, function (childNode) {
         var child = buildNodes(childNode);
-        if(child!=null)
+        if(child!==null)
           model.childNodes.push(child);
       });
     return model;
